@@ -3,11 +3,12 @@ package org.hollingdale.jvesta;
 import java.util.Arrays;
 import java.util.Optional;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public enum VestaCharacter {
+enum VestaCharacter {
 
     BLANK(0, " "),
     A(1, "A"),
@@ -75,17 +76,18 @@ public enum VestaCharacter {
     CWHITE(69, "{W}"),
     CBLACK(70, "{K}");
 
-    @Getter
+    @Getter(AccessLevel.PACKAGE)
     private final int code;
+    @Getter(AccessLevel.PACKAGE)
     private final String token;
 
-    // public static Optional<VestaCharacter> fromCode(int code) {
-    // return Arrays.stream(values())
-    // .filter(c -> code == c.code)
-    // .findFirst();
-    // }
+    static Optional<VestaCharacter> fromCode(int code) {
+        return Arrays.stream(values())
+                .filter(c -> code == c.code)
+                .findFirst();
+    }
 
-    public static Optional<VestaCharacter> fromToken(String token) {
+    static Optional<VestaCharacter> fromToken(String token) {
         return Arrays.stream(values())
                 .filter(c -> c.token.equals(token))
                 .findFirst();

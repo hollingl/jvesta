@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class VestaEncoder {
-  public static List<Integer> encode(String string) {
+class VestaEncoder {
+
+  static List<Integer> encode(String string) {
     var encoded = new ArrayList<Integer>();
 
     if (string != null) {

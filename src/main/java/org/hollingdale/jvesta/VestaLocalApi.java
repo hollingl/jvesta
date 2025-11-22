@@ -42,6 +42,7 @@ public class VestaLocalApi {
       return response.statusCode() == 200;
 
     } catch (URISyntaxException | IOException | InterruptedException x) {
+      x.printStackTrace(System.err);
     }
     return false;
   }

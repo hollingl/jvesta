@@ -7,24 +7,27 @@ import lombok.Getter;
 
 public class VestaMessagePayload {
 
+  static final int ROWS = 6;
+  static final int COLUMNS = 22;
+
   @Getter
   private List<List<Integer>> payload = new ArrayList<>();
 
   public VestaMessagePayload() {
-    for (var i = 0; i < 6; i++) {
+    for (var i = 0; i < ROWS; i++) {
       var row = new ArrayList<Integer>();
-      for (var j = 0; j < 22; j++) {
+      for (var j = 0; j < COLUMNS; j++) {
         row.add(0);
       }
       payload.add(row);
     }
   }
 
-  public void overlay(List<Integer> codes, int row, int column) {
-    if (row >= 0 && row < 6) {
+  void overlay(List<Integer> codes, int row, int column) {
+    if (row >= 0 && row < ROWS) {
       for (var i = 0; i < codes.size(); i++) {
         var col = column + i;
-        if (col >= 0 && col < 22) {
+        if (col >= 0 && col < COLUMNS) {
           payload.get(row).set(col, codes.get(i));
         }
       }
