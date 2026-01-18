@@ -3,8 +3,10 @@ package org.hollingdale.jvesta;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
+@EqualsAndHashCode
 public class VestaMessagePayload {
 
   static final int ROWS = 6;
