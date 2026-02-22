@@ -7,8 +7,6 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse.BodyHandlers;
 
-import com.google.gson.Gson;
-
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -19,20 +17,30 @@ public class VestaLocalApi {
 
   private final String hostAndPort;
   private final String token;
+  private final VestaJackson jackson = new VestaJackson();
 
   public static VestaLocalApi localhost() {
     return new VestaLocalApi(DEFAULT_LOCALHOST, DEFAULT_TOKEN);
   }
 
   public boolean setMessage(VestaMessagePayload payload) {
+    return send(payload.getPayload());
+  }
 
+  public boolean setMessageWithOptions(VestaMessagePayloadWithOptions messageWithOptions) {
+    return send(messageWithOptions);
+  }
+
+  private boolean send(Object payload) {
     try {
+      var payloadString = jackson.serialise(payload);
+
       var uri = new URI("http://%s/local-api/message".formatted(hostAndPort));
       var request = HttpRequest.newBuilder()
           .uri(uri)
           .header("X-Vestaboard-Local-Api-Key", token)
           .header("content-type", "application/json")
-          .POST(HttpRequest.BodyPublishers.ofString(new Gson().toJson(payload.getPayload())))
+          .POST(HttpRequest.BodyPublishers.ofString(payloadString))
           .build();
 
       var response = HttpClient.newBuilder()
@@ -46,4 +54,5 @@ public class VestaLocalApi {
     }
     return false;
   }
+
 }

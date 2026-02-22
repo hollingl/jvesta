@@ -6,7 +6,7 @@
 
     <groupId>org.hollingdale</groupId>
     <artifactId>jvesta</artifactId>
-    <version>1</version>
+    <version>2</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -23,9 +23,9 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-            <version>2.13.2</version>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.21.0</version>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>

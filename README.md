@@ -1,5 +1,10 @@
 # JVesta
 
+## Version history
+
+v1 - Original release
+v2 - Add support for extended Vestasim Local API which includes transition directives
+
 ## What is JVesta?
 
 _JVesta_ is a small Java library simplifying access to a Vestaboard via its Local API. It provides
@@ -15,8 +20,8 @@ running on the same local network as a Vestaboard.
 
 ## Key classes
 
-There are three key classes in the _JVesta_ library: `VestaMessagePayload`, `MessageWriter` and
-`VestaLocalApi`.
+There are three key classes in the _JVesta_ library: `VestaMessagePayload`, `MessageWriter`,
+`VestaMessagePayloadWithOptions` and `VestaLocalApi`.
 
 ### `VestaMessagePayload`
 
@@ -148,7 +153,7 @@ With this, you can construct a `VestaLocalApi` by providing the constructor with
 the network address of your Vestaboard and the API token:
 
 ```java
-var api = new VestaLocalApi("vestabaord.local:7000", "my-api-key");
+var api = new VestaLocalApi("vestaboard.local:7000", "my-api-key");
 ```
 
 There is a convenience method that allows you to connect to a server on your local
@@ -165,3 +170,25 @@ var success = api.setMessage(payload);
 ```
 
 And that's it, your Vestaboard will shortly display your payload.
+
+### `VestaMessagePayloadWithOptions`
+
+After their first release of the Local API, Vestaboard released a version of the `setMessage` endpoint
+that takes a more complex payload allowing you to specify the transitional effects to use when displaying
+the message.
+
+Full details of the extended API can be found [here](https://docs.vestaboard.com/docs/local-api/endpoints#transitions--animations),
+but an example of the extended use from JVesta's perspective is:
+
+```java
+var payload = ...;
+var payloadWithOptions = VestaMessagePayloadWithOptions.builder()
+    .characters(payload.getPayload())
+    .strategy(TransitionStrategy.DIAGONAL)
+    .stepIntervalMs(100L)
+    .stepSize(5)
+    .build();
+
+var success = api.setMessageWithOptions(payloadWithOptions);
+```
+
